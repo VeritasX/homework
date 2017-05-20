@@ -1,13 +1,13 @@
-var validation = (function () {
-    function validationInit(ageInput, select) {
-        ageInput.innerHTML += '<p id="ageValidate" style="color:red;"></p>';
-        select.innerHTML += '<p id="selectValidate" style="color:red;"></p>';
-    }
-    return {
-        validationInit: validationInit
-    }
-})();
 (function init() {
+    var validation = (function () {
+        function validationInit(ageInput, select) {
+            ageInput.innerHTML += '<p id="ageValidate" style="color:red;"></p>';
+            select.innerHTML += '<p id="selectValidate" style="color:red;"></p>';
+        }
+        return {
+            validationInit: validationInit
+        }
+    })();
     var select = document.getElementsByTagName("select");
     var inputAge = document.getElementsByTagName("input");
     var inputSmoking = document.getElementsByName("smoker")[0];
