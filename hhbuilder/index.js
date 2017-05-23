@@ -21,8 +21,9 @@
         }
     })();
     var ui = (function uiMethods() {
-        function createComponent(age, relation, smoker) {
+        function createComponent(age, relation, smoker, id) {
             var ageValue = age,
+                idValue = id,
                 relValue = relation,
                 smokeValue = smoker,
                 domElement = document.querySelector('.household');
@@ -37,8 +38,15 @@
                 smokeValue = 'Are they a smoker? No.';
             }
 
-            domElement.innerHTML += '<ul><li>' + relation + '</li><li>' + age + '</li><li>' + smokeValue + '</li></ul>';
 
+            domElement.innerHTML += '<div class="list" id=" ' + idValue + ' " ><button type="button" onclick= "' + removeItems + '(' + idValue + ')  ">Remove from List</button> <ul><li>Relationship: ' + relation + '</li><li> Age: ' + age + '</li><li>' + smokeValue + '</li></ul></br></div>';
+
+
+        }
+
+        function removeItems(id) {
+            var elementToRemove = document.getElementById(id);
+            elementToRemove.remove();
 
         }
 
@@ -46,6 +54,7 @@
             createComponent: createComponent
         }
     })();
+
     var select = document.getElementsByTagName("select");
     var inputAge = document.getElementsByTagName("input");
     var inputSmoking = document.getElementsByName("smoker")[0];
@@ -93,15 +102,18 @@
     };
     console.log(addButton);
     addButton.onclick = function AddToSubmitedData() {
-
+        function generateId() {
+            return '$' + Math.random().toString(30).substr(2, 7);
+        }
         if (currentData.age > 0 && currentData.rel) {
             var dataToPush = {
+                id: generateId(),
                 age: currentData.age,
                 rel: currentData.rel,
                 smoker: currentData.smoker
             }
             ui.createComponent(dataToPush.age, dataToPush.rel,
-                dataToPush.smoker);
+                dataToPush.smoker, dataToPush.id);
             submittedData.push(dataToPush);
             resetCurrentData();
             console.log(submittedData);
