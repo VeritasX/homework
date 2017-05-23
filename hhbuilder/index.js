@@ -39,13 +39,14 @@
             }
 
 
-            domElement.innerHTML += '<div class="list" id=" ' + idValue + ' " ><button type="button" onclick= "' + removeItems + '(' + idValue + ')  ">Remove from List</button> <ul><li>Relationship: ' + relation + '</li><li> Age: ' + age + '</li><li>' + smokeValue + '</li></ul></br></div>';
+            domElement.innerHTML += '<div class="list" id=" ' + idValue + ' " ><button type="button" class="removeButton">Remove from List</button> <ul><li>Relationship: ' + relation + '</li><li> Age: ' + age + '</li><li>' + smokeValue + '</li></ul></br></div>';
 
-
+            console.log(document.getElementById(idValue));
         }
 
         function removeItems(id) {
-            var elementToRemove = document.getElementById(id);
+            var thisID = id.toString();
+            var elementToRemove = document.getElementById(thisID);
             elementToRemove.remove();
 
         }
