@@ -26,7 +26,13 @@
                 idValue = id,
                 relValue = relation,
                 smokeValue = smoker,
-                domElement = document.querySelector('.household');
+                domElement = document.querySelector('.household'),
+                mainDiv = document.createElement('div'),
+                removeButton = document.createElement('button'),
+                mainUl = document.createElement('ul'),
+                relLi = document.createElement('li'),
+                ageLi = document.createElement('li'),
+                smokeLi = document.createElement('li');
 
             if (smokeValue && relValue === 'self') {
                 smokeValue = 'Are You a smoker? Yes.';
@@ -38,8 +44,7 @@
                 smokeValue = 'Are they a smoker? No.';
             }
 
-
-            domElement.innerHTML += '<div class="list" id=" ' + idValue + ' " ><button type="button" class="removeButton">Remove from List</button> <ul><li>Relationship: ' + relation + '</li><li> Age: ' + age + '</li><li>' + smokeValue + '</li></ul></br></div>';
+            domElement.appendChild(mainDiv);
 
             console.log(document.getElementById(idValue));
         }
@@ -106,22 +111,26 @@
         function generateId() {
             return '$' + Math.random().toString(30).substr(2, 7);
         }
-        if (currentData.age > 0 && currentData.rel) {
-            var dataToPush = {
-                id: generateId(),
-                age: currentData.age,
-                rel: currentData.rel,
-                smoker: currentData.smoker
+        var newId = generateId();
+        var checkID = setInterval(function () {
+            if (newId) {
+                if (currentData.age > 0 && currentData.rel) {
+                    var dataToPush = {
+                        id: newId,
+                        age: currentData.age,
+                        rel: currentData.rel,
+                        smoker: currentData.smoker
+                    }
+
+                    ui.createComponent(dataToPush.age, dataToPush.rel,
+                        dataToPush.smoker, dataToPush.id);
+                    submittedData.push(dataToPush);
+                    resetCurrentData();
+                    console.log(submittedData);
+                    clearInterval(checkID);
+                }
             }
-            ui.createComponent(dataToPush.age, dataToPush.rel,
-                dataToPush.smoker, dataToPush.id);
-            submittedData.push(dataToPush);
-            resetCurrentData();
-            console.log(submittedData);
-
-
-
-        }
+        }, 200);
     }
 
 
