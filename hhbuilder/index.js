@@ -42,9 +42,11 @@
             }
 
             function createMainDiv() {
+                var breakTag = document.createElement('br');
                 var mainDiv = document.createElement('div');
                 mainDiv.id = idValue;
                 mainDiv.width = '100%';
+                domElement.appendChild(breakTag);
                 domElement.appendChild(mainDiv);
 
             }
@@ -71,19 +73,31 @@
                 var mainUl = document.createElement('ul');
                 mainUl.id = mainUlId;
                 thisDiv.appendChild(mainUl);
+            }
 
+            function createLiIElement(data) {
+                var thisUL = document.getElementById(mainUlId);
+                var liElement = document.createElement('li');
+                liElement.textContent = data;
+                liElement.style.listStyle = 'none';
+                thisUL.appendChild(liElement);
+            }
+
+            function AddData() {
+                var ageData = 'Age: ' + ageValue;
+                var relData = 'Relation: ' + relValue;
+                var smokerData = smokeValue;
+                createLiIElement(relData);
+                createLiIElement(ageData);
+                createLiIElement(smokerData);
             }
 
             createMainDiv();
+            addUl();
+            AddData();
             createButton();
             addOnClick();
-            addUl();
-
-
-
         }
-
-
 
         return {
             createComponent: createComponent
