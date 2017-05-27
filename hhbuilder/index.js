@@ -20,19 +20,16 @@
             checkSelf: checkSelf
         }
     })();
+
     var ui = (function uiMethods() {
         function createComponent(age, relation, smoker, id) {
             var ageValue = age,
                 idValue = id,
+                removeId = 'removeElement_' + idValue,
+                mainUlId = 'ulId_' + idValue,
                 relValue = relation,
                 smokeValue = smoker,
-                domElement = document.querySelector('.household'),
-                mainDiv = document.createElement('div'),
-                removeButton = document.createElement('button'),
-                mainUl = document.createElement('ul'),
-                relLi = document.createElement('li'),
-                ageLi = document.createElement('li'),
-                smokeLi = document.createElement('li');
+                domElement = document.querySelector('.household');
 
             if (smokeValue && relValue === 'self') {
                 smokeValue = 'Are You a smoker? Yes.';
@@ -44,17 +41,49 @@
                 smokeValue = 'Are they a smoker? No.';
             }
 
-            domElement.appendChild(mainDiv);
+            function createMainDiv() {
+                var mainDiv = document.createElement('div');
+                mainDiv.id = idValue;
+                mainDiv.width = '100%';
+                domElement.appendChild(mainDiv);
 
-            console.log(document.getElementById(idValue));
+            }
+
+            function createButton() {
+                var thisDiv = document.getElementById(idValue);
+                var removeButton = document.createElement('button');
+                removeButton.textContent = 'remove';
+                removeButton.type = 'button';
+                removeButton.id = removeId;
+                thisDiv.appendChild(removeButton);
+            }
+
+            function addOnClick() {
+                var thisRemoveButton = document.getElementById(removeId);
+                var thisDiv = document.getElementById(idValue);
+                thisRemoveButton.onclick = function removeElement() {
+                    domElement.removeChild(thisDiv);
+                }
+            }
+
+            function addUl() {
+                var thisDiv = document.getElementById(idValue);
+                var mainUl = document.createElement('ul');
+                mainUl.id = mainUlId;
+                thisDiv.appendChild(mainUl);
+
+            }
+
+            createMainDiv();
+            createButton();
+            addOnClick();
+            addUl();
+
+
+
         }
 
-        function removeItems(id) {
-            var thisID = id.toString();
-            var elementToRemove = document.getElementById(thisID);
-            elementToRemove.remove();
 
-        }
 
         return {
             createComponent: createComponent
