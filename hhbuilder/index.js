@@ -1,9 +1,10 @@
 (function init() {
     var validation = (function () {
-        function validationInit(ageInput, select) {
-            ageInput.innerHTML += '<p id="ageValidate" style="color:red;"></p>';
-            select.innerHTML += '<p id="selectValidate" style="color:red;"></p>';
-
+        function validationInit(domElement, customId) {
+            var validation = document.createElement('p');
+            validation.id = customId;
+            validation.style.color = 'red';
+            domElement.appendChild(validation);
         }
 
         function checkSelf(arrayOfItems) {
@@ -102,44 +103,34 @@
             createButton();
             addOnClick();
         }
-
         return {
             createComponent: createComponent
         }
     })();
 
     var select = document.getElementsByTagName("select");
-    var inputAge = document.getElementsByTagName("input");
+    var inputAge = document.getElementsByName("age")[0];
     var inputSmoking = document.getElementsByName("smoker")[0];
     var addButton = document.querySelector('.add');
     var selectBox = select.rel.parentElement.parentElement;
-    var inputBox = inputAge.age.parentElement.parentElement;
+    var inputBox = inputAge.parentElement.parentElement;
     var buttonBox = addButton.parentElement;
     console.log(buttonBox);
     addButton.type = 'button';
-    validation.validationInit(inputBox, selectBox);
-    console.log(inputAge)
+    validation.validationInit(inputBox, 'inputValidation');
+    validation.validationInit(selectBox, 'selectBoxValidation');
 
 
-    addButton.type = 'button';
 
-    function resetCurrentData() {
-        currentData.age = 0;
-        currentData.rel = '';
-        currentData.smoker = false;
-        inputAge.value = '';
-        select.rel.value = '';
-        inputSmoking.checked = false;
-    }
-
-    inputAge.age.onblur = function getAge() {
-        var age = parseInt(inputAge.age.value);
+    inputAge.onblur = function getAge() {
+        var age = parseInt(inputAge.value);
         if (!isNaN(age) && age >= 1) {
             currentData.age = age;
             console.log(currentData);
         }
 
     };
+
     select.rel.onchange = function checkSelectValue() {
         var currentValue = select.rel.value;
         if (select.rel.value) {
@@ -148,11 +139,24 @@
         }
 
     };
+
     inputSmoking.onchange = function checkSmoking() {
         var smokingIsTrue = inputSmoking.checked;
         currentData.smoker = smokingIsTrue;
         console.log(currentData)
     };
+
+
+    function resetData() {
+        currentData.age = 0;
+        currentData.rel = '';
+        currentData.smoker = false;
+
+        inputAge.value = '';
+        select.rel.value = '';
+        inputSmoking.checked = false;
+        console.log(inputAge);
+    }
     console.log(addButton);
     addButton.onclick = function AddToSubmitedData() {
         function generateId() {
@@ -168,26 +172,20 @@
                         rel: currentData.rel,
                         smoker: currentData.smoker
                     }
-
                     ui.createComponent(dataToPush.age, dataToPush.rel,
                         dataToPush.smoker, dataToPush.id);
                     submittedData.push(dataToPush);
-                    resetCurrentData();
+                    resetData();
                     console.log(submittedData);
                     clearInterval(checkID);
                 }
             }
         }, 200);
     }
-
-
-
 })();
-
 var currentData = {
     age: 0,
     rel: '',
     smoker: false
 };
-
 var submittedData = [];
