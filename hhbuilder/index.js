@@ -65,6 +65,10 @@
                 var thisDiv = document.getElementById(idValue);
                 thisRemoveButton.onclick = function removeElement() {
                     domElement.removeChild(thisDiv);
+                    submittedData = submittedData.filter(function (item) {
+                        return item.id !== idValue;
+                    });
+                    console.log(submittedData);
                 }
             }
 
